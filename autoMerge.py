@@ -1,23 +1,29 @@
 # Import the Maya commands library
 from maya import cmds
 
+# default merge distance
 mergeDistance = .01
 
 def showWindow():
+    
+    #create window
     window = cmds.window( title="Auto Merge Tool", iconName='AMT', widthHeight=(275, 150) )
-
+    #column layout
     cmds.columnLayout( adjustableColumn=True )
-
+    #row layout for merge and clean controls
     cmds.rowLayout(numberOfColumns=3)
 
     cmds.button( label='Merge and Clean', command=lambda x: mergeAndClean() )
     cmds.text( 'Merge Distance' )
+    
+    #text field setup
     textField = cmds.textField()
 
     cmds.textField( textField, it='.01',edit=True, aie=True, changeCommand=lambda x: setMergeDistance(textField) )
 
     cmds.setParent('..')
 
+    #combine buttons without merging vertices
     cmds.button( label='Merge and Delete History', command=mergeDeleteHistory )
 
     cmds.button( label='Merge and Keep History', command=mergeKeepHistory )
